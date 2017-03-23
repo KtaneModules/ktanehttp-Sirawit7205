@@ -19,6 +19,14 @@ public class http : MonoBehaviour {
     public int response, adder=0;
     public string current = null;
 
+    private static int _moduleIdCounter = 1;
+    private int _moduleId;
+
+    void Start()
+    {
+        _moduleId = _moduleIdCounter++;
+    }
+
     private void Awake()
     {
         GetComponent<KMNeedyModule>().OnNeedyActivation += OnNeedyActivation;
@@ -92,14 +100,14 @@ public class http : MonoBehaviour {
             }
             adder = numbatt * sum;
             _isQuery = true;
-            Debug.LogFormat("[NeedyHTTP] Table 2 adder calculated = {0}", adder);
+            Debug.LogFormat("[NeedyHTTP #{0}] Table 2 adder calculated = {1}",_moduleId, adder);
         }
         int code = Random.Range(0, 44);
         screen.text = texts[code];
         response = respcode[code];
         if (code >= 20) response += adder;
         _isAwake = true;
-        Debug.LogFormat("[NeedyHTTP] Selected= {0}, text= {1}, expected= {2}", code, screen.text, response);
+        Debug.LogFormat("[NeedyHTTP #{0}] Selected code = {1}, Expected response = {2}", _moduleId, screen.text, response);
     }
 
     protected void OnNeedyDeactivation()
@@ -117,27 +125,27 @@ public class http : MonoBehaviour {
     {
         Audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, btn[b].transform);
         btn[b].AddInteractionPunch();
-        Debug.LogFormat("[NeedyHTTP] Button {0} pressed.", b);
         if (!_isAwake)
         {
             current = null;
             GetComponent<KMNeedyModule>().OnStrike();
-            Debug.LogFormat("[NeedyHTTP] Strike! Press on deactivated!");
+            Debug.LogFormat("[NeedyHTTP #{0}] Strike! Press on deactivated!",_moduleId);
             return;
         }
         current += b.ToString();
         if(current.Length == 3)
         {
+            Debug.LogFormat("[Needy HTTP #{0}] Entered = {1}, Expected = {2}", _moduleId, current, response);
             if (current == response.ToString())
             {
                 GetComponent<KMNeedyModule>().OnPass();
-                Debug.LogFormat("[NeedyHTTP] Passed!");
+                Debug.LogFormat("[NeedyHTTP #{0}] Answer correct! Module passed!", _moduleId);
                 exitfunc();
             }
             else
             {
                 GetComponent<KMNeedyModule>().OnStrike();
-                Debug.LogFormat("[NeedyHTTP] Strike! Wrong response!");
+                Debug.LogFormat("[NeedyHTTP #{0}] Answer incorrect! Strike!", _moduleId);
             }
             current = null;
         }
@@ -147,6 +155,6 @@ public class http : MonoBehaviour {
     {
         screen.text = "";
         _isAwake = false;
-        Debug.LogFormat("[NeedyHTTP] Module deactivated.");
+        Debug.LogFormat("[NeedyHTTP #{0}] Module deactivated.",_moduleId);
     }
 }
