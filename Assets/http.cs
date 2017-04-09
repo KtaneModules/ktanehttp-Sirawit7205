@@ -157,4 +157,17 @@ public class http : MonoBehaviour {
         _isAwake = false;
         Debug.LogFormat("[NeedyHTTP #{0}] Module deactivated.",_moduleId);
     }
+
+    KMSelectable[] ProcessTwitchCommand(string command)
+    {
+        int numpos = command.IndexOfAny("0123456789".ToCharArray());
+
+        if (numpos != -1)
+        {
+            command = command.Substring(numpos, 3);
+            return new[] { btn[int.Parse(command[0].ToString())], btn[int.Parse(command[1].ToString())], btn[int.Parse(command[2].ToString())] };
+        }
+
+        return null;
+    }
 }
