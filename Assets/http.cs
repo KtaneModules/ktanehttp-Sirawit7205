@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Linq;
+using System.Text.RegularExpressions;
 
 public class http : MonoBehaviour {
 
@@ -146,6 +146,7 @@ public class http : MonoBehaviour {
             {
                 GetComponent<KMNeedyModule>().OnStrike();
                 Debug.LogFormat("[NeedyHTTP #{0}] Answer incorrect! Strike!", _moduleId);
+                exitfunc();
             }
             current = null;
         }
@@ -160,11 +161,11 @@ public class http : MonoBehaviour {
 
     KMSelectable[] ProcessTwitchCommand(string command)
     {
-        int numpos = command.IndexOfAny("0123456789".ToCharArray());
+        command = command.ToLowerInvariant().Trim();
 
-        if (numpos != -1)
+        if (Regex.IsMatch(command, @"^resp +\d\d\d$"))
         {
-            command = command.Substring(numpos, 3);
+            command = command.Substring(5, 3);
             return new[] { btn[int.Parse(command[0].ToString())], btn[int.Parse(command[1].ToString())], btn[int.Parse(command[2].ToString())] };
         }
 
