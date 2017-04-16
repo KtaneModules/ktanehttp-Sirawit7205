@@ -119,19 +119,15 @@ public class http : MonoBehaviour {
     protected void OnTimerExpired()
     {
         GetComponent<KMNeedyModule>().OnStrike();
+        exitfunc();
     }
 
     void HandlePress(int b)
     {
         Audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, btn[b].transform);
         btn[b].AddInteractionPunch();
-        if (!_isAwake)
-        {
-            current = null;
-            GetComponent<KMNeedyModule>().OnStrike();
-            Debug.LogFormat("[NeedyHTTP #{0}] Strike! Press on deactivated!",_moduleId);
-            return;
-        }
+        if (!_isAwake) return;
+
         current += b.ToString();
         if(current.Length == 3)
         {
@@ -146,7 +142,6 @@ public class http : MonoBehaviour {
             {
                 GetComponent<KMNeedyModule>().OnStrike();
                 Debug.LogFormat("[NeedyHTTP #{0}] Answer incorrect! Strike!", _moduleId);
-                exitfunc();
             }
             current = null;
         }
