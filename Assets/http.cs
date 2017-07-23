@@ -135,13 +135,13 @@ public class http : MonoBehaviour {
             Debug.LogFormat("[Needy HTTP #{0}] Entered = {1}, Expected = {2}", _moduleId, current, response);
             if (current == response.ToString())
             {
-                GetComponent<KMNeedyModule>().OnPass();
+                GetComponent<KMNeedyModule>().HandlePass();
                 Debug.LogFormat("[NeedyHTTP #{0}] Answer correct! Module passed!", _moduleId);
                 exitfunc();
             }
             else
             {
-                GetComponent<KMNeedyModule>().OnStrike();
+                GetComponent<KMNeedyModule>().HandleStrike();
                 Debug.LogFormat("[NeedyHTTP #{0}] Answer incorrect! Strike!", _moduleId);
             }
             current = null;
