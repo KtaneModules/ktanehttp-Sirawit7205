@@ -13,5 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: http
   title: HTTP response
-  version: 1.0
+  description: "When your bomb acts as a webserver...\r\n\r\nModule ID: http\r\n\r\nManual
+    HTML: https://ktane.timwi.de/HTML/HTTP%20Response.html\r\nManual PDF: https://ktane.timwi.de/PDF/HTTP%20Response.pdf"
+  version: 2.0
   outputFolder: build
+  previewImage: {fileID: 2800000, guid: ed6b14dfe5e3da64498d3c80bdc354bf, type: 3}

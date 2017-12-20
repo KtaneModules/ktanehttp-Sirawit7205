@@ -132,7 +132,7 @@ public class http : MonoBehaviour {
         current += b.ToString();
         if(current.Length == 3)
         {
-            Debug.LogFormat("[Needy HTTP #{0}] Entered = {1}, Expected = {2}", _moduleId, current, response);
+            Debug.LogFormat("[NeedyHTTP #{0}] Entered = {1}, Expected = {2}", _moduleId, current, response);
             if (current == response.ToString())
             {
                 GetComponent<KMNeedyModule>().HandlePass();
