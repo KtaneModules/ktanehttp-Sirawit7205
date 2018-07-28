@@ -3,18 +3,18 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-public class http : MonoBehaviour {
+public class HTTP : MonoBehaviour {
 
     public KMAudio Audio;
     public KMSelectable[] btn;
     public KMBombInfo Info;
     public TextMesh screen;
 
-    private string[] texts = {"Cont","SwPrt","Proc","OK","Crtd","MvPerm","Found","NMod","UPrx","BadR",
+    private readonly string[] texts = {"Cont","SwPrt","Proc","OK","Crtd","MvPerm","Found","NMod","UPrx","BadR",
                              "Unauth","PayReq","Frbd","NFnd","TmOut","Gone","ImaTp","SrvErr","BGw","SrvUn",
                              "Stk","Dtn","Ps","Prs","Cmd","Rls","Blue","Grn","Red","Yel","Blk","Wht",
                              "Cut","Uns","Set","Loc","Indc","Batt","Tmr","Lwr","Upr","Lvr","Time","Done"};
-    private int[] respcode = { 100, 101, 102, 200, 201, 301, 302, 304, 305, 400, 401, 402, 403, 404, 408, 410, 418, 500, 502, 503,
+    private readonly int[] respcode = { 100, 101, 102, 200, 201, 301, 302, 304, 305, 400, 401, 402, 403, 404, 408, 410, 418, 500, 502, 503,
                               601, 602, 603, 604, 605, 606, 701, 702, 703, 704, 705, 706, 801, 802, 803, 804, 805, 806, 901, 902, 903, 904, 905, 906 };
     private bool _isAwake = false, _isQuery = false;
     private int response, adder=0;
@@ -114,13 +114,13 @@ public class http : MonoBehaviour {
     protected void OnNeedyDeactivation()
     {
         screen.text = "";
-        exitfunc();
+        Exitfunc();
     }
 
     protected void OnTimerExpired()
     {
         GetComponent<KMNeedyModule>().OnStrike();
-        exitfunc();
+        Exitfunc();
     }
 
     void HandlePress(int b)
@@ -137,7 +137,7 @@ public class http : MonoBehaviour {
             {
                 GetComponent<KMNeedyModule>().HandlePass();
                 Debug.LogFormat("[NeedyHTTP #{0}] Answer correct! Module passed!", _moduleId);
-                exitfunc();
+                Exitfunc();
             }
             else
             {
@@ -148,7 +148,7 @@ public class http : MonoBehaviour {
         }
     }
 
-    void exitfunc()
+    void Exitfunc()
     {
         screen.text = "";
         _isAwake = false;
