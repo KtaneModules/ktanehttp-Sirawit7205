@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-public class HTTP : MonoBehaviour {
+public class Http : MonoBehaviour {
 
     public KMAudio Audio;
     public KMSelectable[] btn;
@@ -154,6 +154,10 @@ public class HTTP : MonoBehaviour {
         _isAwake = false;
         Debug.LogFormat("[NeedyHTTP #{0}] Module deactivated.",_moduleId);
     }
+
+#pragma warning disable 414
+    private readonly string TwitchHelpMessage = @"Submit a response code with “!{0} resp (code)”. For example, “!{0} resp 100” for code 100.";
+#pragma warning restore 414
 
     KMSelectable[] ProcessTwitchCommand(string command)
     {
