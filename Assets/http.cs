@@ -107,6 +107,7 @@ public class Http : MonoBehaviour {
         screen.text = texts[code];
         response = respcode[code];
         if (code >= 20) response += adder;
+        while (response > 999) response -= 999;
         _isAwake = true;
         Debug.LogFormat("[NeedyHTTP #{0}] Selected code = {1}, Expected response = {2}", _moduleId, screen.text, response);
     }
