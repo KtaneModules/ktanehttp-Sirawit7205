@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-public class Http : MonoBehaviour {
+public class http : MonoBehaviour {
 
     public KMAudio Audio;
     public KMSelectable[] btn;
@@ -106,10 +106,14 @@ public class Http : MonoBehaviour {
         int code = Random.Range(0, 44);
         screen.text = texts[code];
         response = respcode[code];
-        if (code >= 20) response += adder;
+        if (code >= 20)
+        {
+          response += adder;
+          Debug.LogFormat("[NeedyHTTP #{0}] Local Status selected. Adding {1}.", _moduleId, adder);
+        }
         while (response > 999) response -= 999;
         _isAwake = true;
-        Debug.LogFormat("[NeedyHTTP #{0}] Selected code = {1}, Expected response = {2}", _moduleId, screen.text, response);
+        Debug.LogFormat("[NeedyHTTP #{0}] Selected code = {1}, Expected response = {2}", _moduleId, screen.text, response.ToString("D3"));
     }
 
     protected void OnNeedyDeactivation()
@@ -134,7 +138,7 @@ public class Http : MonoBehaviour {
         if(current.Length == 3)
         {
             Debug.LogFormat("[NeedyHTTP #{0}] Entered = {1}, Expected = {2}", _moduleId, current, response);
-            if (current == response.ToString())
+            if (current == response.ToString("D3"))
             {
                 GetComponent<KMNeedyModule>().HandlePass();
                 Debug.LogFormat("[NeedyHTTP #{0}] Answer correct! Module passed!", _moduleId);
