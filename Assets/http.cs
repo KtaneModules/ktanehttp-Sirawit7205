@@ -18,7 +18,7 @@ public class http : MonoBehaviour {
                               601, 602, 603, 604, 605, 606, 701, 702, 703, 704, 705, 706, 801, 802, 803, 804, 805, 806, 901, 902, 903, 904, 905, 906 };
     private bool _isAwake = false, _isQuery = false;
     private int response, adder=0;
-    private string current = null;
+    private string current = string.Empty;
 
     private static int _moduleIdCounter = 1;
     private int _moduleId;
@@ -112,6 +112,9 @@ public class http : MonoBehaviour {
           Debug.LogFormat("[NeedyHTTP #{0}] Local Status selected. Adding {1}.", _moduleId, adder);
         }
         while (response > 999) response -= 999;
+        
+        current = string.Empty;   //clear any pending inputs from last round
+        
         _isAwake = true;
         Debug.LogFormat("[NeedyHTTP #{0}] Selected code = {1}, Expected response = {2}", _moduleId, screen.text, response.ToString("D3"));
     }
@@ -149,7 +152,7 @@ public class http : MonoBehaviour {
                 GetComponent<KMNeedyModule>().HandleStrike();
                 Debug.LogFormat("[NeedyHTTP #{0}] Answer incorrect! Strike!", _moduleId);
             }
-            current = null;
+            current = string.Empty;
         }
     }
 
